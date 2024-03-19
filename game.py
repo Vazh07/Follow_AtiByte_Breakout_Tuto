@@ -18,9 +18,10 @@ class Player(pymunk.Body):
         shape = pymunk.Segment(self,(-50,0),(50,0),8)
         shape.elasticity = 0.98
         shape.collision_type = collision_types["player"]
+        joint = pymunk.GrooveJoint(space.static_body, self, (100, 100), (1180, 100), (0, 0))
         space.add(self, shape)
 
-class GameWindow(pyglet.window.Window):
+class GameWindow(pyglet.wi  ndow.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_location(0,0)
@@ -44,10 +45,8 @@ class GameWindow(pyglet.window.Window):
             self.player.velocity = -600, 0
 
     def on_key_release(self, symbol, modifiers):
-        if symbol == key.RIGHT:
+        if symbol in (key.LEFT, key.RIGHT):
             self.player.velocity = 0, 0
-        elif symbol == key.LEFT:
-            self.player.velocity = -0, 0
 
 if __name__=="__main__":
     window = GameWindow(1280,900,"Breakout!", resizable=True)
